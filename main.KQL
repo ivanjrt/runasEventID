@@ -1,0 +1,8 @@
+SecurityEvent
+| where TimeGenerated >= now(-1d) 
+  and EventID == 4648 //Change the Event for what you want Here
+| project TimeGenerated, Account, Computer, EventID, Activity, IpAddress
+| summarize failedLogons = count() by Computer
+| order by failedLogons
+| render piechart 
+| take 5
